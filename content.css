@@ -1,0 +1,32 @@
+/**
+ * *****************************
+ * Tooltip container
+ * *****************************
+ */
+#ipt_tooltip {
+	position:absolute;
+	z-index:9999;
+	background-color:rgb(240, 240, 240);
+	width:320px;
+	border:1px solid rgb(200, 200, 200);
+  display: block;  /*to be removed afterwards */
+  opacity: 0; /*to be removed afterwards */
+	-webkit-box-shadow:0px 7px 15px rgb(177, 177, 177);
+	-webkit-border-radius:5px;
+}
+
+#ipt_tooltip h3 {
+	font:normal 13px Verdana, Times, Arial;
+	font-weight: bold;
+}
+
+/* Tooltip container, default values for all subnodes */
+#ipt_tooltip * {
+	font:normal 12px Verdana, Times, Arial;
+	color:rgb(49, 49, 49);
+	margin:0;
+	padding:0;
+	text-decoration:none;
+	text-align:left;
+	width:auto;
+}
