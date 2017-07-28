@@ -42,7 +42,6 @@ var iptTooltip = {
     chrome.runtime.sendMessage({
       resize: true
     }, function(response) {
-      console.log(response);
       if (response) {
         console.log("width: " + response.width);
         console.log("height: " + response.height);
@@ -56,7 +55,6 @@ var iptTooltip = {
 
   onMouseUp: function(evt) {
     iptTooltip.windowEvent = evt;
-    console.log("mouse up click");
 
     // Determine Tooltip position.
     var range = window.getSelection().getRangeAt(0);
