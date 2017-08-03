@@ -10,7 +10,8 @@
   },
   "browser_action": {
     "default_icon": "icons/icon19.png",
-    "default_title": "ipt Extension"
+    "default_title": "ipt Extension",
+    "default_popup": "popup.html"
   },
   "icons": {
     "128": "icons/icon128.png",
@@ -24,5 +25,5 @@
     "js": ["content.js"],
     "matches": ["\u003Call_urls>"]
   }],
-  "web_accessible_resources": [ "content.css" ]
+  "web_accessible_resources": [ "content.css"]
 }

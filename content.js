@@ -78,7 +78,7 @@ var iptTooltip = {
 
   lookupCode: function(selection) {
 
-    // save current lookup.
+    // Save current lookup.
     iptTooltip.currentLookup = selection;
     console.log(selection);
 

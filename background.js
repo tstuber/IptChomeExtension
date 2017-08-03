@@ -8,46 +8,35 @@ var counter = 1;
 var lastTabId = -1;
 var employees = null;
 
-var lookup = function(searchTerm) {
-    // only if list of employees is loaded.
-    if (employees) {
-      for (var i = 0; i < employees.length; i++) {
-        if (employees[i].code == searchTerm) {
-          return employees[i];
-        }
+// TODO: Remove Slogan etc.
+var getAllEmployees = function() {
+  if (employees) {
+    return employees;
+  }
+}
+
+var getEmployeeByCode = function(code) {
+  // only if list of employees is loaded.
+  if (employees) {
+    for (var i = 0; i < employees.length; i++) {
+      if (employees[i].code == code) {
+        return employees[i];
       }
     }
-  },
+  }
+}
 
-  // Function to read local employee json file.
-  xmlhttp = new XMLHttpRequest();
+// Function to read local employee json file.
+var xmlhttp = new XMLHttpRequest();
 xmlhttp.onreadystatechange = function() {
   if (this.readyState == 4 && this.status == 200) {
     employees = JSON.parse(this.responseText);
   }
 }
 
-/*
-function sendMessage() {
-  chrome.tabs.query({
-    active: true,
-    currentWindow: true
-  }, function(tabs) {
-    lastTabId = tabs[0].id;
-    console.log(lastTabId);
-    chrome.tabs.sendMessage(lastTabId, "Background page started.");
-  });
-}
-sendMessage();
-*/
-
-// Badge Text on browserAction.
-chrome.browserAction.setBadgeText({
-  text: "ON"
-});
-
 chrome.runtime.onMessage.addListener(function(msg, _, sendResponse) {
   console.log("Listener hit!");
+
   if (msg.resize) {
     sendResponse(chrome.windows.getCurrent(function(win) {
       callback({
@@ -55,24 +44,38 @@ chrome.runtime.onMessage.addListener(function(msg, _, sendResponse) {
         "height": win.height
       });
     }))
-  } else if (msg.getEmployee) {
+  } else if (msg.getAllEmployees) {
+    // crate a datalist with employees.
+    obj = getAllEmployees();
 
-    // load list of employees.
-    if (employees == null) {
-      // load json data.
-      xmlhttp.open("GET", "iptEmployees.json", true);
-      xmlhttp.send();
+    if (obj) {
+      sendResponse(obj);
+    } else {
+      sendResponse({
+        "data": "Not available yet"
+      });
     }
-
+  } else if (msg.getEmployee) {
     // Lookup of employees.
-    obj = lookup(msg.code);
+    obj = getEmployeeByCode(msg.code);
 
     if (!obj) {
       sendResponse();
     } else {
       sendResponse(obj);
     }
-  }
+  } 
   // If we don't return anything, the message channel will close, regardless
   // of whether we called sendResponse.
 });
+
+function initialize() {
+  // load list of employees.
+  if (employees == null) {
+    // load json data.
+    xmlhttp.open("GET", "iptEmployees.json", true);
+    xmlhttp.send();
+  }
+}
+
+initialize();
