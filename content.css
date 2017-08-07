@@ -9,8 +9,6 @@
 	background-color:rgb(240, 240, 240);
 	width:320px;
 	border:1px solid rgb(200, 200, 200);
-  display: block;  /*to be removed afterwards */
-  opacity: 0; /*to be removed afterwards */
 	-webkit-box-shadow:0px 7px 15px rgb(177, 177, 177);
 	-webkit-border-radius:5px;
 }
