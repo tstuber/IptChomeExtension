@@ -14,16 +14,14 @@ function enter(e) {
       getEmployee: true,
       code: input.value
     }, function(response) {
-
-      var detail = document.getElementById("details");
-      details.innerHTML = response.name;
-
+      var details = document.getElementById("details");
+      details.id = "ipt_popup";
+      details.innerHTML = "<b>" + response.name + "</b><br/>" + response.function + "<br/><img src='" + response.picture + "'></img>";
     })
   }
 }
 
 function initialize() {
-
   // Query background page for name code.
   chrome.runtime.sendMessage({
     getAllEmployees: true,
@@ -64,15 +62,13 @@ var templateContent = document.querySelector('#resultstemplate').content;
 
 search.addEventListener('input', function handler(event) {
   console.log("Item selected");
-
-  
 });
 search.addEventListener('keyup', function handler(event) {
-    while (results.children.length) results.removeChild(results.firstChild);
-    var inputVal = new RegExp(search.value.trim(), 'i');
-    var set = Array.prototype.reduce.call(templateContent.cloneNode(true).children, function searchFilter(frag, item, i) {
-        if (inputVal.test(item.textContent) && frag.children.length < 6) frag.appendChild(item);
-        return frag;
-    }, document.createDocumentFragment());
-    results.appendChild(set);
+  while (results.children.length) results.removeChild(results.firstChild);
+  var inputVal = new RegExp(search.value.trim(), 'i');
+  var set = Array.prototype.reduce.call(templateContent.cloneNode(true).children, function searchFilter(frag, item, i) {
+    if (inputVal.test(item.textContent) && frag.children.length < 6) frag.appendChild(item);
+    return frag;
+  }, document.createDocumentFragment());
+  results.appendChild(set);
 });

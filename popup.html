@@ -1,23 +1,26 @@
 <html>
 <header>
+  <link rel="stylesheet" type="text/css" href="popup.css">
 </header>
 
 <body>
-  <h1>Links</h1>
-  <a href="https://fs-7324--fhcm2.eu11.visual.force.com/apex/CollaborationPortalIndex" target="_blank">HR Tool</a>
-  <a href="https://ipt.jiveon.com/" target="_blank">JIVE</a>
-  <a href="https://ipt.jiveon.com/groups/ma-corner/pages/alltageinsatz" target="_blank">Alltag/Einsatz</a>
-  <hr>
-  <h1>Lookup</h1>
+  <div id="ipt_popup">
+    <h1>Links</h1>
+    <a href="https://fs-7324--fhcm2.eu11.visual.force.com/apex/CollaborationPortalIndex" target="_blank">HR Tool</a>
+    <a href="https://ipt.jiveon.com/" target="_blank">JIVE</a>
+    <a href="https://ipt.jiveon.com/groups/ma-corner/pages/alltageinsatz" target="_blank">Alltag/Einsatz</a>
+    <hr>
+    <h1>Lookup</h1>
 
-  <!--<form>-->
+    <!--<form>-->
     <template id="resultstemplate"></template>
-    <input id="search" name="search" type="text" list="searchresults" placeholder="Name / Kuerzel" autocomplete="off">
+    <input id="search" name="search" type="search" list="searchresults" placeholder="Name / Kuerzel" autocomplete="off">
 
     <!-- Send Message to Backend to query Datalist Object -->
     <datalist id="searchresults"></datalist>
 
-  <!--</form>-->
-  <div id="details"></div>
+    <!--</form>-->
+    <div id="details"></div>
+  </div>
   <script src="popup.js"></script>
   <html>

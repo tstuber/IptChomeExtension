@@ -1,6 +1,6 @@
 {
-  "name": "Identify ipt Employees",
-  "description": "Select an Abbriviation on a page and show who it is.",
+  "name": "ipt Chrome Extension",
+  "description": "Select an abbriviation on a page and show who it is.",
   "version": "1.0",
   "manifest_version": 2,
   "permissions": ["tabs", "*://*/*"],
