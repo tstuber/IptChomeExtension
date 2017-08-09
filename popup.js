@@ -1,24 +1,26 @@
-function loadDatalist2() {
-  console.log("TSTS2"); // The function returns the product of p1 and p2
+function click(e) {
+  var input = document.getElementById("search");
+  fillDetails(input.value);
 }
 
 function enter(e) {
   if (e.keyCode == 13) {
-    console.log("enter");
-
     var input = document.getElementById("search");
-    console.log(input.value);
-
-    // Query background page for name code.
-    chrome.runtime.sendMessage({
-      getEmployee: true,
-      code: input.value
-    }, function(response) {
-      var details = document.getElementById("details");
-      details.id = "ipt_popup";
-      details.innerHTML = "<b>" + response.name + "</b><br/>" + response.function + "<br/><img src='" + response.picture + "'></img>";
-    })
+    fillDetails(input.value);
   }
+}
+
+function fillDetails(searchCode) {
+  // Query background page for name code.
+  chrome.runtime.sendMessage({
+    getEmployee: true,
+    code: searchCode
+  }, function(response) {
+    if(response) {
+      var details = document.getElementById("details");
+      details.innerHTML = "<b>" + response.name + "</b><br/>" + response.function+"<br/><img src='" + response.picture + "'></img>";
+    }
+  })
 }
 
 function initialize() {
@@ -49,9 +51,33 @@ function addOptions(employees) {
   }
 }
 
-//document.getElementById("employeeInput").addEventListener("click", loadDatalist2);
+document.getElementById("search").addEventListener("input", click);
 document.getElementById("search").addEventListener("keyup", enter);
 initialize();
+
+//////// TESSTE
+document.getElementById("search").addEventListener("search",
+  function(event) {
+    if (event.type === "search") {
+      if (event.currentTarget.value !== "") {
+        console.log("search with " + event.currentTarget.value);
+      } else {
+        // Clear search / details.
+        resetPopupDetails();
+      }
+    }
+  });
+
+function resetPopupDetails() {
+
+  // Clear search input.
+  var search = document.getElementById("search");
+  search.value = "";
+
+  // Clear details.
+  var obj = document.getElementById("details");
+  obj.innerHTML = "";
+}
 
 // Workaround for datalist and template to limit number of shown entries.
 // Since there is no proper solution (and jQuery's autocomplete not an option),
@@ -60,9 +86,9 @@ var search = document.querySelector('#search');
 var results = document.querySelector('#searchresults');
 var templateContent = document.querySelector('#resultstemplate').content;
 
-search.addEventListener('input', function handler(event) {
-  console.log("Item selected");
-});
+// search.addEventListener('input', function handler(event) {
+//   console.log("Item selected");
+// });
 search.addEventListener('keyup', function handler(event) {
   while (results.children.length) results.removeChild(results.firstChild);
   var inputVal = new RegExp(search.value.trim(), 'i');
