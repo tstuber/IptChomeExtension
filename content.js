@@ -19,7 +19,6 @@ var iptTooltip = {
   /*** Methods ***/
   init: function() {
     // Query background page here; no stored variables yet.
-
     iptTooltip.onWindowResize();
     // Query backend initially.
     iptTooltip.lookupCode(null);
