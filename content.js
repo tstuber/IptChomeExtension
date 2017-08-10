@@ -26,8 +26,6 @@ var iptTooltip = {
     window.addEventListener("resize", iptTooltip.onWindowResize);
     document.addEventListener("dblclick", iptTooltip.onDbClick);
     document.addEventListener("mouseup", iptTooltip.onMouseUp);
-
-    console.log("Ready to send a message to backend!");
   },
 
   // Provide easy access to element by id.
@@ -79,7 +77,6 @@ var iptTooltip = {
 
     // Save current lookup.
     iptTooltip.currentLookup = selection;
-    console.log(selection);
 
     // Query background page for name code.
     chrome.runtime.sendMessage({
