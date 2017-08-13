@@ -1,7 +1,7 @@
 {
   "name": "ipt Chrome Extension",
   "description": "Helper Extension zum Nachschlagen von Mitarbeitern. Entweder per Doppelklick auf das Kürzel oder per Plugin Suchmaske.",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "manifest_version": 2,
   "permissions": ["tabs", "*://*/*"],
   "background": {
