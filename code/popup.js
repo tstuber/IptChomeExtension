@@ -8,9 +8,7 @@ function onSearch(event) {
     if (event.currentTarget.value !== "") {
       console.log("search with " + event.currentTarget.value);
     } else {
-      // TODO: Current workaround to resize popup window. Should be solved wihout
-      // reload of options.
-      location.reload();
+      resetPopup();
     }
   }
 };
@@ -43,7 +41,13 @@ function onKeyup(event) {
 // Is used if item is selected from dropdown.
 function onInput(e) {
   var search = document.getElementById("search");
-  fillDetails(search.value);
+  fillDetails(search.value.toUpperCase());
+}
+
+function resetPopup() {
+  // TODO: Current workaround to resize popup window. Should be solved wihout
+  // reload of options.
+  location.reload();
 }
 
 // Queries background page and fills details if requrest is successful.
@@ -53,9 +57,15 @@ function fillDetails(searchCode) {
     getEmployee: true,
     code: searchCode
   }, function(response) {
+    var details = document.getElementById("details");
     if (response) {
-      var details = document.getElementById("details");
       details.innerHTML = "</br><b>" + response.name + "</b><br/>" + response.function+"<br/><img src='" + response.picture + "'></img>";
+    } else if (details.innerHTML != "") {
+      // If innerHTML contains values, then the details have to be reseted.
+
+      // TODO: current Reset-Workaround results in bad UI behavior.
+      // Better reset-solution is required.
+      //resetPopup();
     }
   })
 }
@@ -74,7 +84,7 @@ function initialize() {
   })
 }
 
-// Adds all possible employees to template elements. 
+// Adds all possible employees to template elements.
 function addOptions(employees) {
 
   var template = document.getElementById("resultstemplate")
