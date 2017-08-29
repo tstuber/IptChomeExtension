@@ -2,6 +2,10 @@ document.getElementById("search").addEventListener("input", onInput);
 document.getElementById("search").addEventListener("keyup", onKeyup);
 document.getElementById("search").addEventListener("search", onSearch);
 
+// get initial popup height.
+var initBodyHeight = document.getElementsByTagName("body")[0].offsetHeight;
+var initHtmlHeight = document.getElementsByTagName("html")[0].offsetHeight;
+
 // onSearch Event handler. Only used when clear-search button is pressed.
 function onSearch(event) {
   if (event.type === "search") {
@@ -44,10 +48,15 @@ function onInput(e) {
   fillDetails(search.value.toUpperCase());
 }
 
+// Resets the detail section of the popup and restores its initial height.
 function resetPopup() {
-  // TODO: Current workaround to resize popup window. Should be solved wihout
-  // reload of options.
-  location.reload();
+  var details = document.getElementById("details");
+  details.innerHTML = "";
+
+  var body =  document.getElementsByTagName("body")[0];
+  var html =  document.getElementsByTagName("html")[0];
+  html.style.height = initHtmlHeight;
+  body.style.height = initBodyHeight;
 }
 
 // Queries background page and fills details if requrest is successful.
@@ -62,10 +71,7 @@ function fillDetails(searchCode) {
       details.innerHTML = "</br><b>" + response.name + "</b><br/>" + response.function+"<br/><img src='" + response.picture + "'></img>";
     } else if (details.innerHTML != "") {
       // If innerHTML contains values, then the details have to be reseted.
-
-      // TODO: current Reset-Workaround results in bad UI behavior.
-      // Better reset-solution is required.
-      //resetPopup();
+      resetPopup();
     }
   })
 }
