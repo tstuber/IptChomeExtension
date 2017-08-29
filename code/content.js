@@ -1,5 +1,3 @@
-// ipt Tooltip class.
-
 var iptTooltip = {
 
   /*** Members ***/
@@ -39,6 +37,7 @@ var iptTooltip = {
     chrome.runtime.sendMessage({
       resize: true
     }, function(response) {
+      console.log("callback");
       if (response) {
         console.log("width: " + response.width);
         console.log("height: " + response.height);
