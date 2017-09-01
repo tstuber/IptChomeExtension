@@ -51,17 +51,23 @@ var iptTooltip = {
   onMouseUp: function(evt) {
     iptTooltip.windowEvent = evt;
 
+    // get selection and check for range.
+    var selection = window.getSelection();
+    if(selection.rangeCount <= 0) {
+      return;
+    }
+
     // Determine Tooltip position.
-    var range = window.getSelection().getRangeAt(0);
+    var range = selection.getRangeAt(0);
     iptTooltip.setTooltipPosition(range);
 
     // Selected string text.
-    var selection = (document.selection && document.selection.createRange().text) ||
+    var selectionStr = (document.selection && document.selection.createRange().text) ||
       (window.getSelection && window.getSelection().toString()).trim();
 
     // Validate if selection is code.
-    if (/^[A-Z]{3}/.test(selection) && (iptTooltip.windowEvent.type == "dblclick")) {
-      iptTooltip.lookupCode(selection);
+    if (/^[A-Z]{3}/.test(selectionStr) && (iptTooltip.windowEvent.type == "dblclick")) {
+      iptTooltip.lookupCode(selectionStr);
     } else {
       // Hide Tooltip if mouse presses somewhere else.
       if (!iptTooltip.isChildFrom(iptTooltip.windowEvent.srcElement, iptTooltip.$(iptTooltip.tooltipID.tooltip))) {
@@ -71,15 +77,15 @@ var iptTooltip = {
     }
   },
 
-  lookupCode: function(selection) {
+  lookupCode: function(selectionStr) {
 
     // Save current lookup.
-    iptTooltip.currentLookup = selection;
+    iptTooltip.currentLookup = selectionStr;
 
     // Query background page for name code.
     chrome.runtime.sendMessage({
       getEmployee: true,
-      code: selection
+      code: selectionStr
     }, function(response) {
       iptTooltip.fillDataToTooltip(response);
     })
@@ -177,7 +183,6 @@ var iptTooltip = {
   fillDataToTooltip: function(data) {
 
     if (data) {
-      console.log(data);
 
       var content_container = iptTooltip.$(iptTooltip.tooltipID.content);
 
